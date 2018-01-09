@@ -6,7 +6,7 @@
     @test isequal(p,10=>20)
     @test iterate(p)[1] == 10
     @test iterate(p, iterate(p)[2])[1] == 20
-    @test iterate(p, iterate(p, iterate(p)[2]) == nothing
+    @test iterate(p, iterate(p, iterate(p)[2])) == nothing
     @test endof(p) == length(p) == 2
     @test Base.indexed_iterate(p, 1, nothing) == (10,2)
     @test Base.indexed_iterate(p, 2, nothing) == (20,3)
