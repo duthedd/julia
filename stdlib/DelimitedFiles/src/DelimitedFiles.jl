@@ -759,11 +759,12 @@ writedlm(io::IO, a::AbstractArray{<:Any,0}, dlm; opts...) = writedlm(io, reshape
 
 # write an iterable row as dlm-separated items
 function writedlm_row(io::IO, row, dlm, quotes)
-    state = start(row)
-    while !done(row, state)
-        (x, state) = next(row, state)
+    y = iterate(row)
+    while y !== nothing
+        (x, state) = y
+        y = iterate(row, state)
         writedlm_cell(io, x, dlm, quotes)
-        done(row, state) ? write(io,'\n') : print(io,dlm)
+        y === nothing ? write(io,'\n') : print(io,dlm)
     end
 end
 

@@ -781,11 +781,11 @@ end
 
 # this actually defines reverse iteration (e.g. it should not be used for merge/copy/filter type operations)
 function iterate(d::ImmutableDict{K,V}, t=d) where {K, V}
-    !isdefined(t, :key) && return nothing
+    !isdefined(t, :parent) && return nothing
     (Pair{K,V}(t.key, t.value), t.parent)
 end
 length(t::ImmutableDict) = count(x->true, t)
-isempty(t::ImmutableDict) = !isdefined(t, :key)
+isempty(t::ImmutableDict) = !isdefined(t, :parent)
 empty(::ImmutableDict, ::Type{K}, ::Type{V}) where {K, V} = ImmutableDict{K,V}()
 
 _similar_for(c::Dict, ::Type{Pair{K,V}}, itr, isz) where {K, V} = empty(c, K, V)

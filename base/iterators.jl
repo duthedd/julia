@@ -228,7 +228,7 @@ size(v::IndexValue)    = size(v.itr)
 
 @propagate_inbounds function iterate(v::IndexValue, state...)
     x = iterate(v.itr, state...)
-    x == nothing && return x
+    x === nothing && return x
     indx, n = x
     item = v.data[indx]
     return (Pair(indx, item), n)

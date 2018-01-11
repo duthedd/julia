@@ -396,12 +396,15 @@ end
 function _unique!(A::AbstractVector)
     seen = Set{eltype(A)}()
     idxs = eachindex(A)
-    i = state = start(idxs)
+    y = iterate(idxs)
+    y == nothing && return A
+    i, _ = y
     for x in A
         if x ∉ seen
             push!(seen, x)
-            i, state = next(idxs, state)
+            i, _ = y
             A[i] = x
+            y = iterate(idxs, y[2])
         end
     end
     resize!(A, i - first(idxs) + 1)
