@@ -584,9 +584,17 @@ function collect_to!(dest::AbstractArray{T}, itr, offs, st) where T
     return dest
 end
 
-function grow_to!(dest, itr, st...)
+function grow_to!(dest, itr)
+    y = iterate(itr)
+    y === nothing && return dest
+    dest2 = empty(dest, typeof(y[1]))
+    push!(dest2, y[1])
+    grow_to!(dest, itr, y[2])
+end
+
+function grow_to!(dest, itr, st)
     T = eltype(dest)
-    y = iterate(itr, st...)
+    y = iterate(itr, st)
     while y !== nothing
         el, st = y
         S = typeof(el)

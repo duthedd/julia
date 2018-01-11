@@ -721,13 +721,12 @@ function dot(x::AbstractVector, y::AbstractVector)
         return zero(eltype(x))'zero(eltype(y))
     end
     iy = iterate(y)
-    (vx, ix) = ix
-    (vy, iy) = iy
-    s = vx'vy
+    s = ix[1]'iy[1]
+    ix, iy = iterate(x, ix[2]), iterate(y, iy[2])
     while ix != nothing
-        ix = iterate(x, ix[2])
-        iy = iterate(y, iy[1])
         s += ix[1]'iy[1]
+        ix = iterate(x, ix[2])
+        iy = iterate(y, iy[2])
     end
     return s
 end

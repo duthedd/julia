@@ -166,10 +166,19 @@ function dict_with_eltype(DT_apply::F, kv::Generator, t) where F
     return grow_to!(dict_with_eltype(DT_apply, T), kv)
 end
 
+function grow_to!(dest::AbstractDict{K, V}, itr) where V where K
+    y = iterate(itr)
+    y === nothing && return dest
+    ((k,v), st) = y
+    dest2 = empty(dest, typeof(k), typeof(v))
+    dest2[k] = v
+    grow_to!(dest2, itr, st)
+end
+
 # this is a special case due to (1) allowing both Pairs and Tuples as elements,
 # and (2) Pair being invariant. a bit annoying.
-function grow_to!(dest::AbstractDict{K,V}, itr, st...) where V where K
-    y = iterate(itr, st...)
+function grow_to!(dest::AbstractDict{K,V}, itr, st) where V where K
+    y = iterate(itr, st)
     while y !== nothing
         (k,v), st = y
         if isa(k,K) && isa(v,V)

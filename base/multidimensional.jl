@@ -353,16 +353,16 @@ module IteratorsMD
 
     # reversed CartesianIndices iteration
 
-    @inline function itertate(r::Reverse{<:CartesianIndices})
+    @inline function iterate(r::Reverse{<:CartesianIndices})
         iterfirst, iterlast = last(r.itr), first(r.itr)
         if any(map(<, iterfirst.I, iterlast.I))
             return nothing
         end
-        iterfirst
+        iterfirst, iterfirst
     end
     @inline function iterate(r::Reverse{<:CartesianIndices}, state)
-        nextstate = CartesianIndex(dec(state.I, last(r.iter).I, first(r.iter).I))
-        nextstate.I[end] < first(r.iter.indices[end]) && return nothing
+        nextstate = CartesianIndex(dec(state.I, last(r.itr).I, first(r.itr).I))
+        nextstate.I[end] < first(r.itr.indices[end]) && return nothing
         nextstate, nextstate
     end
 

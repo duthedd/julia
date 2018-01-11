@@ -183,7 +183,7 @@ cd(dirname(@__FILE__)) do
         foreach(wait, all_tasks)
     finally
         if isa(STDIN, Base.TTY)
-            schedule(stdin_monitor, InterruptException(); error=true)
+            try; schedule(stdin_monitor, InterruptException(); error=true); end
         end
     end
 
