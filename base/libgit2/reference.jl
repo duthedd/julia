@@ -334,17 +334,3 @@ function Base.iterate(bi::GitBranchIter, state=nothing)
 end
 
 Base.IteratorSize(::Type{GitBranchIter}) = Base.SizeUnknown()
-
-function Base.map(f::Function, bi::GitBranchIter)
-    res = nothing
-    y = iterate(bi)
-    while y !== nothing
-        val = f(y[1])
-        if res === nothing
-            res = Vector{typeof(val)}()
-        end
-        push!(res, val)
-        y = iterate(bi)
-    end
-    return res
-end

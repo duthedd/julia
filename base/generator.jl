@@ -41,7 +41,7 @@ Generator(::Type{T}, I1, I2, Is...) where {T} = Generator(a->T(a...), zip(I1, I2
 
 function iterate(g::Generator, s...)
     @_inline_meta
-    y = iterate(g.iter, s...)
+    y = iterate(g.iter, s...)::Union{Tuple{Any, Any}, Nothing}
     y == nothing && return nothing
     g.f(y[1]), y[2]
 end

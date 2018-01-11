@@ -589,7 +589,7 @@ function grow_to!(dest, itr)
     y === nothing && return dest
     dest2 = empty(dest, typeof(y[1]))
     push!(dest2, y[1])
-    grow_to!(dest, itr, y[2])
+    grow_to!(dest2, itr, y[2])
 end
 
 function grow_to!(dest, itr, st)
