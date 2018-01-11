@@ -505,7 +505,7 @@ end
 @deprecate Bidiagonal(A::AbstractMatrix, isupper::Bool) Bidiagonal(A, ifelse(isupper, :U, :L))
 
 @deprecate fieldnames(v) fieldnames(typeof(v))
-# nfields(::Type) deprecation in builtins.c: update nfields tfunc in inference.jl when it is removed.
+# nfields(::Type) deprecation in builtins.c: update nfields tfunc in compiler/tfuncs.jl when it is removed.
 # also replace `_nfields` with `nfields` in summarysize.c when this is removed.
 
 # ::ANY is deprecated in src/method.c
@@ -683,7 +683,7 @@ function (::Type{T})(arg) where {T}
     end
     convert(T, arg)::T
 end
-# related items to remove in: abstractarray.jl, dates/periods.jl, inference.jl
+# related items to remove in: abstractarray.jl, dates/periods.jl, compiler.jl
 # also remove all uses of is_default_method
 
 # Issue #19923

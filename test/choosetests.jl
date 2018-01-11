@@ -31,7 +31,7 @@ in the `choices` argument:
 """ ->
 function choosetests(choices = [])
     testnames = [
-        "linalg", "subarray", "core", "inference", "worlds",
+        "linalg", "subarray", "core", "compiler", "worlds",
         "keywordargs", "numbers", "subtype",
         "char", "strings", "triplequote", "unicode", "intrinsics",
         "dict", "hashing", "iobuffer", "staged", "offsetarray",
@@ -51,7 +51,7 @@ function choosetests(choices = [])
         "enums", "cmdlineargs", "i18n", "int",
         "checked", "bitset", "floatfuncs", "compile", "inline",
         "boundscheck", "error", "ambiguous", "cartesian", "asmvariant", "osutils",
-        "channels", "iostream", "specificity", "codegen", "codevalidation",
+        "channels", "iostream", "specificity", "codegen",
         "reinterpretarray", "syntax", "logging", "missing", "asyncmap"
     ]
 
@@ -133,6 +133,16 @@ function choosetests(choices = [])
         # specifically selected case
         filter!(x -> x != "linalg", tests)
         prepend!(tests, linalgtests)
+    end
+
+    compilertests = ["compiler/compiler", "compiler/validation"]
+
+    if "compiler" in skip_tests
+        filter!(x -> (x != "compiler" && !(x in compilertests)), tests)
+    elseif "compiler" in tests
+        # specifically selected case
+        filter!(x -> x != "compiler", tests)
+        prepend!(tests, compilertests)
     end
 
     net_required_for = ["socket", "stdlib", "libgit2"]
